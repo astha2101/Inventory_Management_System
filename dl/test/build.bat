@@ -1,0 +1,1 @@
+g++ -std=c++11 -static %1 -I ..\..\..\tmcommon\include -I ..\..\..\tmfhlib\include -I ..\include -linventorydl -L..\lib -l tmcommon -L ..\..\..\tmcommon\lib -l tmfh -L ..\..\..\tmfhlib\lib -o %2

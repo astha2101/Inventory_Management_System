@@ -1,0 +1,74 @@
+#ifndef __CategoryWiseList_inventory_bl
+#define __CategoryWiseList_inventory_bl 1
+#include<set>
+#include<AbstractList>
+#include<bl\I_Item.h>
+#include<bl\Item.h>
+#include<bl\bl.h>
+using namespace std;
+using namespace collections;
+namespace inventory_bl
+{
+template<class T>
+class CategoryWiseList:public AbstractList<Item>
+{
+multiset<I_Item *,T>* dataSet;
+typename multiset<I_Item *,T>::iterator iter;
+int currentRecordIndex;
+int size;
+public:
+CategoryWiseList(multiset<I_Item *,T>* dataSet,__$$__BL_ENUMERATION category,unsigned int size);
+CategoryWiseList(multiset<I_Item *,T>* dataSet,unsigned int size);
+Item get(int);
+int getSize();
+};
+template<class T>
+CategoryWiseList<T>::CategoryWiseList(multiset<I_Item *,T>* dataSet,unsigned int size)
+{
+this->dataSet=dataSet;
+this->size=size;
+this->currentRecordIndex=0;
+this->iter=dataSet->begin();
+}
+template<class T>
+CategoryWiseList<T>::CategoryWiseList(multiset<I_Item *,T>* dataSet,__$$__BL_ENUMERATION category,unsigned int size)
+{
+this->dataSet=dataSet;
+this->size=size;
+this->currentRecordIndex=-1;
+this->iter=dataSet->begin();
+if(this->size>0)
+{
+Item item;
+item.setCategory(category);
+item.setCode(0);
+item.setName("");
+this->iter=dataSet->find(&item);
+this->currentRecordIndex=0;
+}
+}
+template<class T>
+Item CategoryWiseList<T>::get(int i)
+{
+if(i<0 || i>=this->size)
+{
+char msg[51];
+sprintf(msg,"%d is not a valid index",i);
+throw IndexOutOfBoundsException(string(msg));
+}
+int steps;
+steps=i-currentRecordIndex;
+if(steps!=0)
+{
+advance(this->iter,steps);
+}
+this->currentRecordIndex=i;
+return *((Item *)(*(this->iter)));
+}
+template<class T>
+int CategoryWiseList<T>::getSize()
+{
+return this->size;
+}
+}
+#endif
