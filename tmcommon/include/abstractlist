@@ -1,0 +1,17 @@
+#ifndef __Abstract_List
+#define __Abstract_List 1
+#include<set>
+#include<IndexOutOfBoundsException>
+using namespace std;
+using namespace exceptions;
+namespace collections
+{
+template<class T>
+class AbstractList
+{
+public:
+virtual T get(int)=0;
+virtual int getSize()=0;
+};
+}
+#endif

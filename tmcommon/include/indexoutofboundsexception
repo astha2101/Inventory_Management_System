@@ -1,0 +1,21 @@
+#ifndef __INDEX_OUT_OF_BOUNDS_EXCEPTION
+#define __INDEX_OUT_OF_BOUNDS_EXCEPTION 1
+#include<iostream>
+using namespace std;
+namespace exceptions
+{
+class IndexOutOfBoundsException:public exception
+{
+string message;
+public:
+IndexOutOfBoundsException();
+IndexOutOfBoundsException(string message);
+IndexOutOfBoundsException(const IndexOutOfBoundsException &other);
+IndexOutOfBoundsException & operator=(const IndexOutOfBoundsException &other);
+virtual ~IndexOutOfBoundsException() throw();
+const char * what() const throw();
+void setMessage(string message);
+string getMessage();
+};
+}
+#endif
